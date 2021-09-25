@@ -88,20 +88,6 @@ class Reviewer(Mentor):
         return res
 
 
-
-student_list = ['Шкадин', 'Петров']
-lectur_list = ['Сергеев', 'Антипов']
-
-def average_hw_student(students, courses):
-    sum = 0
-    quantity = 0
-    for student in students:
-        # if student in
-        print(student)
-
-average_hw_student(putin.__dict__, 'Python')
-
-
 shkadin = Student('Шкадин', 'Александр', 'м')
 shkadin.courses_in_progress += ['C++']
 shkadin.courses_in_progress += ['Python']
@@ -153,3 +139,31 @@ putin.rate_hw(petrov, 'C++', 3)
 #
 # print(shkadin > antipov)
 # print(sergeev > petrov)
+
+
+student_list = [{'name': 'Шкадин', 'surname': 'Александр', 'gender': 'м', 'finished_courses': [], 'courses_in_progress': ['C++', 'Python'], 'grades': {'Python': [7, 10, 5]}},
+                {'name': 'Иван', 'surname': 'Петров', 'gender': 'м', 'finished_courses': ['Python'], 'courses_in_progress': ['C++'], 'grades': {'C++': [4, 8, 3]}}]
+
+lectur_list = [{'name': 'Пётр', 'surname': 'Сергеев', 'courses_attached': ['C++', 'Python'], 'grades': {'Python': [7], 'C++': [10]}},
+               {'name': 'Юрий', 'surname': 'Антипов', 'courses_attached': ['C++'], 'grades': {'C++': [8, 4]}}]
+
+def average_hw_student(students, course):
+    avg = 0
+    for student in students:
+        for key, val in student['grades'].items():
+            if course == key:
+                avg = round(sum(val)/len(val), 1)
+    return avg
+
+print(average_hw_student(student_list, 'Python'))
+
+
+def average_hw_lectur(lecturers, course):
+    avg = 0
+    for lectur in lecturers:
+        for key, val in lectur['grades'].items():
+            if course == key:
+                avg = round(sum(val)/len(val), 1)
+    return avg
+
+print(average_hw_lectur(lectur_list, 'C++'))
