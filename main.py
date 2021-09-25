@@ -5,6 +5,7 @@ class Student:
         self.gender = gender
         self.finished_courses = []
         self.courses_in_progress = []
+        self.average_score = 0
         self.grades = {}
 
     def rate_hw(self, lectur, course, grade):
@@ -25,9 +26,14 @@ class Student:
                     sum += grade
                     quantity += 1
                     average = sum / quantity
-            return average
+                    self.average_score = average
+            return round(average, 1)
         else:
             return 0
+
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            return self.rate_hw_avg() < other.rate_hw_avg()
 
     def __str__(self):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за домашние задания: {self.rate_hw_avg()} ' \
@@ -55,7 +61,7 @@ class Lecturer(Mentor):
                     sum += grade
                     quantity += 1
                     average = sum / quantity
-            return average
+            return round(average, 1)
         else:
             return 0
 
@@ -64,9 +70,14 @@ class Lecturer(Mentor):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.rate_hw_avg()}'
         return res
 
+    def __lt__(self, other):
+        if not isinstance(other, Lecturer):
+            return self.rate_hw_avg() < other.rate_hw_avg()
+
+
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
+        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress and 0 < grade <= 10:
             if course in student.grades:
                 student.grades[course] += [grade]
             else:
@@ -78,49 +89,64 @@ class Reviewer(Mentor):
         res = f'Имя: {self.name} \nФамилия: {self.surname}'
         return res
 
-student1 = Student('Александр','Шкадин', 'м')
-student2 = Student('Юлия', 'Шкадина', 'ж')
-student1.courses_in_progress += ['Python']
-student1.courses_in_progress += ['C++']
-student1.finished_courses += ['JS']
-student1.finished_courses += ['Java']
 
 
+student_list = []
+lectur_list = []
 
-# print(student1.name)
-# print(student1.surname)
-# print(student1.gender)
+def average_hw_student(students, courses):
+    sum = 0
+    quantity = 0
+    for st
+
+shkadin = Student('Шкадин', 'Александр', 'м')
+shkadin.courses_in_progress += ['C++']
+shkadin.courses_in_progress += ['Python']
+
+petrov = Student('Иван', 'Петров', 'м')
+petrov.courses_in_progress += ['C++']
+petrov.finished_courses += ['Python']
+
+sergeev = Lecturer('Пётр', 'Сергеев')
+sergeev.courses_attached += ['C++']
+sergeev.courses_attached += ['Python']
+
+antipov = Lecturer('Юрий', 'Антипов')
+antipov.courses_attached += ['C++']
+
+pupkin = Reviewer('Алексей', 'Пупкин')
+pupkin.courses_attached += ['C++']
+
+putin = Reviewer('Владимир', 'Путин')
+putin.courses_attached += ['Python']
+putin.courses_attached += ['C++']
 
 
-mentor1 = Mentor('Евгений', 'Васильевич')
-mentor2 = Mentor('Валентина', 'Ивановна')
-# print(mentor1.name)
-# print(mentor1.surname)
+shkadin.rate_hw(sergeev, 'Python', 7)
+shkadin.rate_hw(sergeev, 'C++', 10)
+shkadin.rate_hw(antipov, 'C++', 8)
+shkadin.rate_hw(antipov, 'C++', 4)
+
+putin.rate_hw(shkadin, 'Python', 7)
+putin.rate_hw(shkadin, 'Python', 10)
+putin.rate_hw(shkadin, 'Python', 5)
+putin.rate_hw(shkadin, 'C++', 4)
+putin.rate_hw(shkadin, 'C++', 8)
+putin.rate_hw(shkadin, 'C++', 3)
 
 
-lectur1 = Lecturer('Ольга', 'Валентиновна')
-lectur2 = Lecturer('Людмила', 'Васильевна')
-lectur1.courses_attached += ['Python']
-lectur1.courses_attached += ['C++']
+print(shkadin)
+print(f'')
+print(petrov)
+print(f'')
+print(sergeev)
+print(f'')
+print(antipov)
+print(f'')
+print(pupkin)
+print(f'')
+print(putin)
 
-student1.rate_hw(lectur1, 'Python', 9) # Выставление оценки лектору, Студентом
-student1.rate_hw(lectur1, 'C++', 10) # Выставление оценки лектору, Студентом
 
-# print(lectur1) #Вывод лектора
-
-# print(lectur1.grades)
-# print(lectur1.name)
-# print(lectur1.surname)
-
-reviewer1 = Reviewer('Олег', 'Булыгин')
-reviewer2 = Reviewer('Петр', 'Никитин')
-reviewer1.courses_attached += ['Python']
-reviewer1.courses_attached += ['C++']
-# print(reviewer1.name)
-# print(reviewer1.surname)
-
-reviewer1.rate_hw(student1, 'Python', 5) # Выставление оценки студенту, Лектором
-reviewer1.rate_hw(student1, 'C++', 10) # Выставление оценки студенту, Лектором
-
-# print(reviewer1) #Вывод проверяющего
-print(student1) #Вывод студента
+print(shkadin > antipov)
+print(sergeev > petrov)
