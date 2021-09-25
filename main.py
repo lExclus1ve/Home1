@@ -5,7 +5,6 @@ class Student:
         self.gender = gender
         self.finished_courses = []
         self.courses_in_progress = []
-        self.average_score = 0
         self.grades = {}
 
     def rate_hw(self, lectur, course, grade):
@@ -26,7 +25,6 @@ class Student:
                     sum += grade
                     quantity += 1
                     average = sum / quantity
-                    self.average_score = average
             return round(average, 1)
         else:
             return 0
@@ -91,13 +89,18 @@ class Reviewer(Mentor):
 
 
 
-student_list = []
-lectur_list = []
+student_list = ['Шкадин', 'Петров']
+lectur_list = ['Сергеев', 'Антипов']
 
 def average_hw_student(students, courses):
     sum = 0
     quantity = 0
-    for st
+    for student in students:
+        # if student in
+        print(student)
+
+average_hw_student(putin.__dict__, 'Python')
+
 
 shkadin = Student('Шкадин', 'Александр', 'м')
 shkadin.courses_in_progress += ['C++']
@@ -130,23 +133,23 @@ shkadin.rate_hw(antipov, 'C++', 4)
 putin.rate_hw(shkadin, 'Python', 7)
 putin.rate_hw(shkadin, 'Python', 10)
 putin.rate_hw(shkadin, 'Python', 5)
-putin.rate_hw(shkadin, 'C++', 4)
-putin.rate_hw(shkadin, 'C++', 8)
-putin.rate_hw(shkadin, 'C++', 3)
+putin.rate_hw(petrov, 'C++', 4)
+putin.rate_hw(petrov, 'C++', 8)
+putin.rate_hw(petrov, 'C++', 3)
 
 
-print(shkadin)
-print(f'')
-print(petrov)
-print(f'')
-print(sergeev)
-print(f'')
-print(antipov)
-print(f'')
-print(pupkin)
-print(f'')
-print(putin)
-
-
-print(shkadin > antipov)
-print(sergeev > petrov)
+# print(shkadin)
+# print(f'')
+# print(petrov)
+# print(f'')
+# print(sergeev)
+# print(f'')
+# print(antipov)
+# print(f'')
+# print(pupkin)
+# print(f'')
+# print(putin)
+#
+#
+# print(shkadin > antipov)
+# print(sergeev > petrov)
